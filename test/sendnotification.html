@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Send Notification</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-JkhdljUp/nUp7gja0Dq3HuWjQ8LaCRTXxZKRutelY89="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#sendNoficationFormButton").on("click", function(e){
+                e.preventDefault();
+                var cookie_ids = $('#cookieIds').val().split(",");
+                console.log(cookie_ids);
+                var payload = {
+                    message: {
+                        markup: $('#markup').val()
+                    },
+                    campaign_id: parseInt($('input[name=campaign_id]').val()),
+                    org_token: $('input[name=org_token]').val(),
+                    cookie_ids: cookie_ids,
+                    ttl: $('input[name=ttl]').val()
+                };
+
+                $.ajax({
+                    url: '/notiier/notify',
+                    type: 'post',
+                    data: JSON.stringify(payload),
+                    headers: {
+                        "x-auth": 'mlasdkbkasdalksdjhoahsdnlnasdhnlassdhpkwq2iomc'
+                    },
+                    contentType: 'application/json',
+                    success: function (data) {
+                        $('#resDiv').html(JSON.stringify(data));
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Send notification</h2>
+    <div id="sendNotificationDiv">
+        Message <textarea id="markup" name="markup">Hey! Welcome to notiier</textarea><br/><br/>
+        Campaign Id <input type="number" name="campaign_id" value="1" /><br/><br/>
+        Org token<input type="text" name="org_token" value="static_org_token"/><br/><br/>
+        Cookie Ids <textarea id="cookieIds" name="cookie_id">*</textarea><br/><br/>
+        TTL(Sec) <input type="text" name="ttl" value="30"/><br/><br/>
+        <input type="button" value="Send" id="sendNoficationFormButton">
+        <div id="resDiv"></div>
+    </div>
+</body>
+</html>
