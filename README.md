@@ -1,2 +1,2 @@
 # Notifier
-NodeJS In-App Notificatification Service
+NodeJS pop-up Notification Service by using websockets.
