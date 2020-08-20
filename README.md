@@ -1,2 +1,2 @@
 # Notifier
-NodeJS pop-up Notification Service by using websockets.
+NodeJS pop-up Notification(Message passing) Service by using websockets.
